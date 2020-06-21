@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+    api:
+        build: ./corona/backend/
+        command: uvicorn app.main:app --reload --workers 1 --host 0.0.0.0 --port 7000
+        volumes:
+            - ./corona/backend/:/usr/src/corona
+        ports:
+            - 7000:7000
+        image: corona_api:latest
