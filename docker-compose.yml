@@ -9,3 +9,11 @@ services:
         ports:
             - 7000:7000
         image: corona_api:latest
+    app:
+        build: ./corona/frontend
+        command: streamlit run app/main.py --server.port 8501
+        volumes:
+            - ./corona/frontend/:/usr/src/streamlit
+        ports:
+            - 8501:8501
+        image: corona_app:latest
