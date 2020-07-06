@@ -14,4 +14,3 @@ def countries():
     response = requests.get(covid_request).json()
 
     return response
-

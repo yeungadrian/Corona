@@ -30,6 +30,14 @@ def globalStats():
 
     return response['Global']
 
+@router.get("/summaryByCountry", tags = ['Summary'])
+def globalStats():
+    covid_request = 'https://api.covid19api.com/summary'
+
+    response = requests.get(covid_request).json()
+
+    return response['Countries']
+
 @router.post("/countryStats", tags = ['Summary'])
 def countryStats(item: countryStatsItem):
 
@@ -38,8 +46,15 @@ def countryStats(item: countryStatsItem):
     end_date = json_request['end_date']
     country = json_request['country']
 
-    covid_request = f'https://api.covid19api.com/country/{country}/status/confirmed?from={start_date}T00:00:00Z&to={end_date}T00:00:00Z'
+    covid_request = f'https://api.covid19api.com/total/country/{country}/status/confirmed?from={start_date}T00:00:00Z&to={end_date}T00:00:00Z'
 
     response = requests.get(covid_request).json()
 
-    return response
+    country_stats = pd.DataFrame(response)
+    country_stats['dailycases'] = country_stats['Cases'] - country_stats['Cases'].shift(1)
+    country_stats['rollingaverage'] = country_stats['dailycases'].rolling(window = 7,min_periods = 1).mean()
+
+
+    statsJSON = country_stats.to_json()
+
+    return json.loads(statsJSON)

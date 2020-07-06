@@ -1,5 +1,5 @@
 from fastapi import FastAPI
-from .routers import summary, country
+from .routers import summary, country, model
 
 app = FastAPI()
 
@@ -11,4 +11,9 @@ app.include_router(
 app.include_router(
     country.router,
     prefix="/country"
+)
+
+app.include_router(
+    model.router,
+    prefix="/model"
 )
