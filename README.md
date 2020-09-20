@@ -10,8 +10,8 @@ Covid-19 Application supporting daily tracking by country, historical analysis a
 ### Installation
 - Download repo
 - Run docker-compose up
-- Go to localhost:8501 for streamlit application
-- Backend swagger page at localhost:7000
+- Go to http://localhost:8501 for streamlit application
+- Backend swagger page at http://localhost:7000
 
 ### Data Source:
 https://covid19api.com
